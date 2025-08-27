@@ -1,18 +1,11 @@
 import { useState, type ChangeEvent, type FormEvent } from 'react'
 import './App.css'
-//version 1 con useState
-//version 2 con useReducer
-//version 3 con redux
-//final darle css
 
 interface Tarea {
   id: string
   titulo: string
-  estado: string  //usar union types, o string literals?
+  estado: string  
 }
-// interface EstadoTarea {
-//   estado: "hacer" | "haciendo" | "terminado"
-// }
 
 function App() {
 
@@ -53,8 +46,6 @@ function App() {
     }
     console.log("el id: " + idTarea);
   }
-  //dar una posibildiad de que el usuario verifque la decision
-  //mostrar modal  --> para que confirme el usuario ---> 
   function eliminarTarea(id: string) {
     const tareaEliminada: Tarea[] = tareas.filter(t => t.id != id)
     setTareas(tareaEliminada)

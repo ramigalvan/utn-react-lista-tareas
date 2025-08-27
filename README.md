@@ -1,69 +1,49 @@
-# React + TypeScript + Vite
+# 📝 TodoApp con React + TypeScript
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este proyecto es una aplicación simple de lista de tareas (**CRUD**) desarrollada con **React + TypeScript**.  
+Sirve como ejemplo práctico para entender el manejo de formularios y estados en React utilizando distintos enfoques:
 
-Currently, two official plugins are available:
+1. **Versión 1:** con `useState`
+2. **Versión 2:** con `useReducer`
+3. **Versión 3:** con **Redux**
+4. **Versión final:** con estilos (CSS)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🚀 Funcionalidades
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Crear tarea** → Completar el título y estado, luego registrar.  
+- **Editar tarea** → Seleccionar una tarea y cargarla en el formulario para modificarla.  
+- **Eliminar tarea** → Quitar una tarea de la lista. *(Se puede mejorar con un modal de confirmación)*.  
+- **Validación básica** → No permite guardar si los campos están vacíos.  
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## ▶️ Ejecución del proyecto
+
+```bash
+# Instalar dependencias
+npm install
+
+# Levantar servidor en modo desarrollo
+npm run dev
+
+# Build para producción
+npm run build
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## ✨ Mejoras futuras
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+* [ ] Versión con **useReducer**
+* [ ] Versión con **Redux Toolkit**
+* [ ] Confirmación al eliminar tarea (modal)
+* [ ] Estilos con **CSS Modules** o **Tailwind**
+* [ ] Persistencia con **localStorage** o base de datos
+
+---
+
+📅 Proyecto de práctica para aprender React + TypeScript
+
