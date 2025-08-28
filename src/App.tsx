@@ -1,14 +1,9 @@
-import { useState, type ChangeEvent, type FormEvent } from 'react'
+import { useReducer, useState, type ChangeEvent, type FormEvent } from 'react'
+import type { Tarea } from './types'
+import { tareasReducer } from './tareaReducer'
 // import './App.css'
 
-type EstadoTarea = 'hacer' | 'haciendo' | 'terminado'
 
-interface Tarea {
-  id: string
-  titulo: string
-  estado: EstadoTarea
-  fechaCreacion: Date
-}
 
 const TAREA_INICIAL: Omit<Tarea, 'id' | 'fechaCreacion'> = {
   titulo: '',
@@ -16,8 +11,9 @@ const TAREA_INICIAL: Omit<Tarea, 'id' | 'fechaCreacion'> = {
 }
 
 function App() {
+  const [tareas, dispatch] = useReducer(tareasReducer, [])
+
   const [tarea, setTarea] = useState(TAREA_INICIAL)
-  const [tareas, setTareas] = useState<Tarea[]>([])
   const [errorMsg, setErrorMsg] = useState<string>("")
   const [modoEdicion, setModoEdicion] = useState<string | null>(null)
 
@@ -39,20 +35,23 @@ function App() {
     if (!validarFormulario()) return
 
     if (modoEdicion) { //actualizar tarea existente
-      setTareas(tareas.map(t =>
-        t.id === modoEdicion
-          ? { ...t, titulo: tarea.titulo.trim(), estado: tarea.estado }
-          : t
-      ))
+      dispatch({
+        type: 'ACTUALIZAR_TAREA',
+        payload: {
+          id: modoEdicion,
+          titulo: tarea.titulo.trim(),
+          estado: tarea.estado
+        }
+      })
       setModoEdicion(null)
     } else {
-      const nuevaTarea: Tarea = {
-        ...tarea,
-        id: crypto.randomUUID(),
-        titulo: tarea.titulo.trim(),
-        fechaCreacion: new Date()
-      }
-      setTareas([...tareas, nuevaTarea])
+      dispatch({
+        type: 'AGREGAR_TAREA',
+        payload: {
+          titulo: tarea.titulo.trim(),
+          estado: tarea.estado
+        }
+      })
     }
     //limpiar formulario
     setTarea(TAREA_INICIAL)
@@ -81,8 +80,10 @@ function App() {
 
   const eliminarTarea = (id: string): void => {
     if (window.confirm('¿estas seguro de que quieres eliminar esta tarea?')) {
-      const tareasActualizada: Tarea[] = tareas.filter(t => t.id != id)
-      setTareas(tareasActualizada)
+      dispatch({
+        type: 'ELIMINAR_TAREA',
+        payload: id
+      })
       if (modoEdicion === id) {
         cancelarEdicion()
       }
@@ -94,10 +95,10 @@ function App() {
     setModoEdicion(null)
     setErrorMsg('')
   }
-  
+
   return (
     <>
-      <h1>lista de tareas</h1>
+      <h1>Lista de tareas - useReducer</h1>
 
       <form onSubmit={handleSubmit}>
         {errorMsg && <span >{errorMsg}</span>}
@@ -123,20 +124,20 @@ function App() {
       </form>
 
       {
-        tareas.length ?  (
-          <ul>
+        tareas.length ? (
+          <ul style={{ listStyle: 'none', padding: 0, margin: '1rem 0' }}>
             {tareas.map((tarea) =>
               <li key={tarea.id} style={{ marginBottom: "1rem" }}>
-                titulo: {tarea.titulo}, estado: {tarea.estado}
+                titulo: {tarea.titulo}, estado: {tarea.estado} - <span>{tarea.fechaCreacion.toLocaleDateString()}</span>
                 <div>
                   <button onClick={() => { editarTarea(tarea.id) }}>editar</button>
                   <button onClick={() => { eliminarTarea(tarea.id) }}>eliminar</button>
                 </div>
               </li>)}
           </ul>
-        ): (
+        ) : (
           <span>No hay tareas por hacer...</span>
-        ) 
+        )
       }
     </>
   )
