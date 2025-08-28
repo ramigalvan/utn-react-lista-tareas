@@ -1,64 +1,107 @@
 import { useState, type ChangeEvent, type FormEvent } from 'react'
-import './App.css'
+// import './App.css'
+
+type EstadoTarea = 'hacer' | 'haciendo' | 'terminado'
 
 interface Tarea {
   id: string
   titulo: string
-  estado: string  
+  estado: EstadoTarea
+  fechaCreacion: Date
+}
+
+const TAREA_INICIAL: Omit<Tarea, 'id' | 'fechaCreacion'> = {
+  titulo: '',
+  estado: 'hacer'
 }
 
 function App() {
-
-  const [tarea, setTarea] = useState<Tarea>({ titulo: "", estado: "", id: "" })
+  const [tarea, setTarea] = useState(TAREA_INICIAL)
   const [tareas, setTareas] = useState<Tarea[]>([])
   const [errorMsg, setErrorMsg] = useState<string>("")
+  const [modoEdicion, setModoEdicion] = useState<string | null>(null)
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>): void {
-    event.preventDefault()
-    if (tarea.titulo.trim() && tarea.estado.trim()) {
-      setErrorMsg("")
-      if (tarea.id) {
-        setTareas(tareas.map(t => t.id === tarea.id ? tarea : t))
-      } else {
-        const nuevaTarea: Tarea = {
-          ...tarea,
-          id: crypto.randomUUID()
-        }
-        setTareas([...tareas, nuevaTarea])
-      }
-      setTarea({ estado: "", titulo: "", id: "" })
-    } else {
-      setErrorMsg("Complete los campos del formulario")
+  const validarFormulario = (): boolean => {
+    if (!tarea.titulo.trim()) {
+      setErrorMsg('El titulo es obligatorio')
+      return false
     }
-
+    if (tarea.titulo.trim().length < 3) {
+      setErrorMsg('El titulo debe tener al menos 3 caracteres')
+      return false
+    }
+    setErrorMsg('')
+    return true
   }
 
-  function handleChange(event: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
+    event.preventDefault()
+    if (!validarFormulario()) return
+
+    if (modoEdicion) { //actualizar tarea existente
+      setTareas(tareas.map(t =>
+        t.id === modoEdicion
+          ? { ...t, titulo: tarea.titulo.trim(), estado: tarea.estado }
+          : t
+      ))
+      setModoEdicion(null)
+    } else {
+      const nuevaTarea: Tarea = {
+        ...tarea,
+        id: crypto.randomUUID(),
+        titulo: tarea.titulo.trim(),
+        fechaCreacion: new Date()
+      }
+      setTareas([...tareas, nuevaTarea])
+    }
+    //limpiar formulario
+    setTarea(TAREA_INICIAL)
+  }
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
     const { name, value } = event.target;
-    setTarea({ ...tarea, [name]: value })
+    setTarea(prev => ({ ...prev, [name]: value }))
 
+    //limpiar error cuando el usuario empiece a escribir
+    if (errorMsg && name === "titulo" && value.trim()) {
+      setErrorMsg('')
+    }
   }
 
-  function editarTarea(idTarea: string): void {
+  const editarTarea = (idTarea: string): void => {
     const tareaSeleccionada = tareas.find(t => t.id === idTarea)
     if (tareaSeleccionada) {
-      setTarea(tareaSeleccionada)
+      setTarea({
+        titulo: tareaSeleccionada.titulo,
+        estado: tareaSeleccionada.estado,
+      })
+      setModoEdicion(idTarea)
     }
-    console.log("el id: " + idTarea);
-  }
-  function eliminarTarea(id: string) {
-    const tareaEliminada: Tarea[] = tareas.filter(t => t.id != id)
-    setTareas(tareaEliminada)
   }
 
+  const eliminarTarea = (id: string): void => {
+    if (window.confirm('¿estas seguro de que quieres eliminar esta tarea?')) {
+      const tareasActualizada: Tarea[] = tareas.filter(t => t.id != id)
+      setTareas(tareasActualizada)
+      if (modoEdicion === id) {
+        cancelarEdicion()
+      }
+    }
+  }
 
+  const cancelarEdicion = (): void => {
+    setTarea(TAREA_INICIAL)
+    setModoEdicion(null)
+    setErrorMsg('')
+  }
+  
   return (
     <>
       <h1>lista de tareas</h1>
 
       <form onSubmit={handleSubmit}>
-        {errorMsg && <span style={{ color: "crimson" }}>{errorMsg}</span>}
-        <div style={{display: "flex"}}>
+        {errorMsg && <span >{errorMsg}</span>}
+        <div >
           <input type="text"
             name="titulo"
             value={tarea.titulo}
@@ -66,17 +109,21 @@ function App() {
             placeholder="titulo de tarea..."
           />
           <select name="estado" value={tarea.estado} onChange={handleChange}>
-            <option value="">selecciona un estado</option>
             <option value="hacer">hacer</option>
             <option value="haciendo" >haciendo</option>
             <option value="terminado" >terminado</option>
           </select>
         </div>
-        <button type="submit">{tarea.id ? "Guardar" : "Registrar"}</button>
+        <button type="submit">{modoEdicion ? "Actualizar" : "Agregar tarea"}</button>
+        {
+          modoEdicion && (
+            <button onClick={cancelarEdicion}>Cancelar</button>
+          )
+        }
       </form>
 
       {
-        tareas && (
+        tareas.length ?  (
           <ul>
             {tareas.map((tarea) =>
               <li key={tarea.id} style={{ marginBottom: "1rem" }}>
@@ -87,10 +134,13 @@ function App() {
                 </div>
               </li>)}
           </ul>
-        )
+        ): (
+          <span>No hay tareas por hacer...</span>
+        ) 
       }
     </>
   )
 }
+
 
 export default App
