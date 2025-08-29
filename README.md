@@ -1,5 +1,6 @@
 # 📝 Trabajo Práctico – Sesión 12 (Wrap up)
 
+## Link para ver el deploy: https://ramigalvan.github.io/utn-react-lista-tareas/
 ## TodoApp con React + TypeScript + Redux Toolkit
 
 Este proyecto es una aplicación simple de lista de tareas (**CRUD**) desarrollada con **React + TypeScript**.
