@@ -1,5 +1,6 @@
 {
   "name": "lista-tareas-redux",
+  "homepage": "https://github.com/ramigalvan/utn-react-lista-tareas/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -7,7 +8,9 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview --port 8080"
+    "preview": "vite preview --port 8080",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.8.2",
