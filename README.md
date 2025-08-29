@@ -1,22 +1,20 @@
-# 📝 TodoApp con React + TypeScript
+# 📝 Trabajo Práctico – Sesión 12 (Wrap up)
 
-Este proyecto es una aplicación simple de lista de tareas (**CRUD**) desarrollada con **React + TypeScript**.  
-Sirve como ejemplo práctico para entender el manejo de formularios y estados en React utilizando distintos enfoques:
+## TodoApp con React + TypeScript + Redux Toolkit
 
-1. **Versión 1:** con `useState`
-2. **Versión 2:** con `useReducer`
-3. **Versión 3:** con **Redux**
-4. **Versión final:** con estilos (CSS)
+Este proyecto es una aplicación simple de lista de tareas (**CRUD**) desarrollada con **React + TypeScript**.
+Cumple con el enunciado del trabajo práctico de la **Sesión 12 - Wrap up**, implementando Redux para la gestión global del estado.
 
 ---
 
-## 🚀 Funcionalidades
+## 🚀 Funcionalidades implementadas
 
-- **Crear tarea** → Completar el título y estado, luego registrar.  
-- **Editar tarea** → Seleccionar una tarea y cargarla en el formulario para modificarla.  
-- **Eliminar tarea** → Quitar una tarea de la lista. *(Se puede mejorar con un modal de confirmación)*.  
-- **Validación básica** → No permite guardar si los campos están vacíos.  
-
+* **Crear un elemento** → agregar una nueva tarea con título y estado.
+* **Eliminar un elemento** → borrar una tarea existente de la lista.
+* **Modificar el estado interno de una prop** → cambiar el estado (`hacer`, `haciendo`, `terminado`) de cada tarea.
+* **Listar todos los elementos** → mostrar todas las tareas registradas.
+* **Gestión de estado con Redux Toolkit** → centralización del estado global.
+* **Validación básica** → no permite guardar si los campos están vacíos.
 
 ---
 
@@ -37,11 +35,12 @@ npm run build
 
 ## ✨ Mejoras futuras
 
-* [ ] Confirmación al eliminar tarea (modal)
-* [ ] Estilos con **CSS Modules** o **Tailwind**
-* [ ] Persistencia con **localStorage** o base de datos
+* [ ] Confirmación al eliminar tarea (modal).
+* [ ] Estilos con **CSS** (CSS Modules o Tailwind).
+* [ ] Persistencia de datos con **localStorage** o una base de datos.
 
 ---
 
-📅 Proyecto de práctica para aprender React + TypeScript
+📅 Proyecto de práctica para reforzar conceptos de **React + TypeScript + Redux Toolkit**.
 
+---
