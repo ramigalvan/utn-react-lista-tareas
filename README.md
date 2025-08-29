@@ -37,8 +37,6 @@ npm run build
 
 ## ✨ Mejoras futuras
 
-* [ ] Versión con **useReducer**
-* [ ] Versión con **Redux Toolkit**
 * [ ] Confirmación al eliminar tarea (modal)
 * [ ] Estilos con **CSS Modules** o **Tailwind**
 * [ ] Persistencia con **localStorage** o base de datos
