@@ -1,0 +1,65 @@
+.dialog {
+  align-self: center;
+  justify-self: center;
+  border: none;
+  padding: 0;
+  border-radius: 8px;
+  background: transparent;
+}
+
+/* overlay nativo */
+.dialog::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.modal {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  width: 350px;
+  max-width: 90%;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+
+.title {
+  margin-bottom: 0.5rem;
+}
+
+.message {
+  margin-bottom: 1rem;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.cancel {
+  background: #f2f1f1;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cancel:hover {
+  background: #e0dfdf;
+}
+
+.confirm {
+  background: #976391f3;
+  /* violeta */
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.confirm:hover {
+  background: #7d4c73;
+  /* violeta más oscuro */
+}

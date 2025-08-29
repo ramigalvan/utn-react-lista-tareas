@@ -35,9 +35,9 @@ npm run build
 
 ## ✨ Mejoras futuras
 
-* [ ] Confirmación al eliminar tarea (modal).
-* [ ] Estilos con **CSS** (CSS Modules o Tailwind).
-* [ ] Persistencia de datos con **localStorage** o una base de datos.
+- [ ] Confirmación al eliminar tarea (modal)
+- [x] Estilos con **CSS** (CSS Modules o Tailwind)
+- [ ] Persistencia de datos con **localStorage** o una base de datos
 
 ---
 
