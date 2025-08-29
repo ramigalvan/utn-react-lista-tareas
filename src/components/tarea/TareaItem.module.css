@@ -1,0 +1,71 @@
+.item {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  color: #111827;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Colores según estado */
+.hacer {
+  background: #f5f5f5; /* gris muy suave */
+}
+
+.haciendo {
+  background: #48639C; /* azul */
+  color: white;
+}
+
+.terminado {
+  background: #976391b3; /* violeta */
+  color: white;
+  text-decoration: line-through;
+  opacity: 0.9;
+}
+
+.contenido {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.botones {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.boton {
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+  font-weight: 500;
+}
+
+.boton:hover {
+  transform: scale(1.05);
+}
+
+/* Botones con paleta */
+.editar {
+  background: #F7996E; /* naranja suave */
+  color: white;
+}
+
+.editar:hover {
+  background: #e57d4d; /* naranja más fuerte */
+}
+
+.eliminar {
+  background: #976391f3; /* violeta */
+  color: white;
+}
+
+.eliminar:hover {
+  background: #7d4c73; /* violeta más oscuro */
+}

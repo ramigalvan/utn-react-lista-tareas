@@ -1,8 +1,9 @@
-import { useState, type ChangeEvent, type FormEvent } from "react";
+import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import { useDispatch } from "react-redux";
-import { agregarTarea, actualizarTarea } from "../slices/tareasSlice";
-import type { EstadoTarea } from "../types/";
-import type { AppDispatch } from "../store/store";
+import { agregarTarea, actualizarTarea } from "../../slices/tareasSlice";
+import type { EstadoTarea } from "../../types";
+import type { AppDispatch } from "../../store/store";
+import styles from "./FormTarea.module.css";
 
 const TAREA_INICIAL = { titulo: "", estado: "hacer" as EstadoTarea };
 
@@ -16,6 +17,14 @@ export default function FormTarea({ modoEdicion, setModoEdicion, tareaEdicion }:
   const dispatch = useDispatch<AppDispatch>();
   const [tarea, setTarea] = useState(tareaEdicion ?? TAREA_INICIAL);
   const [errorMsg, setErrorMsg] = useState("");
+
+  useEffect(() => {
+    if (tareaEdicion) {
+      setTarea(tareaEdicion);
+    } else {
+      setTarea(TAREA_INICIAL);
+    }
+  }, [tareaEdicion])
 
   const validarFormulario = () => {
     if (!tarea.titulo.trim()) {
@@ -57,24 +66,40 @@ export default function FormTarea({ modoEdicion, setModoEdicion, tareaEdicion }:
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      {errorMsg && <span>{errorMsg}</span>}
-      <div>
+    <form onSubmit={handleSubmit} className={styles.form}>
+      {errorMsg && <span className={styles.error}>{errorMsg}</span>}
+      <div className={styles.inputGroup}>
         <input
           type="text"
           name="titulo"
           value={tarea.titulo}
           onChange={handleChange}
           placeholder="Título..."
+          className={styles.input}
         />
-        <select name="estado" value={tarea.estado} onChange={handleChange}>
+        <select
+          name="estado"
+          value={tarea.estado}
+          onChange={handleChange}
+          className={styles.select}
+        >
           <option value="hacer">hacer</option>
           <option value="haciendo">haciendo</option>
           <option value="terminado">terminado</option>
         </select>
       </div>
-      <button type="submit">{modoEdicion ? "Actualizar" : "Agregar"}</button>
-      {modoEdicion && <button onClick={cancelarEdicion}>Cancelar</button>}
+      <button type="submit" className={styles.button}>
+        {modoEdicion ? "Actualizar" : "Agregar"}
+      </button>
+      {modoEdicion && (
+        <button
+          type="button"
+          onClick={cancelarEdicion}
+          className={`${styles.button} ${styles.cancel}`}
+        >
+          Cancelar
+        </button>
+      )}
     </form>
   );
 }
