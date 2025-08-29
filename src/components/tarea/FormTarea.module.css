@@ -17,6 +17,13 @@
   gap: 0.6rem;
 }
 
+@media (max-width: 370px) {
+
+  .inputGroup {
+    flex-direction: column;
+  }
+}
+
 .input,
 .select {
   flex: 1;
@@ -35,7 +42,8 @@
   padding: 0.5rem 1rem;
   border: none;
   cursor: pointer;
-  background: #48639C; /* azul de la paleta */
+  background: #48639C;
+  /* azul de la paleta */
   color: white;
   border-radius: 4px;
   font-weight: 500;
@@ -43,12 +51,14 @@
 }
 
 .button:hover {
-  background: #3b517f; /* azul más oscuro */
+  background: #3b517f;
+  /* azul más oscuro */
   transform: scale(1.03);
 }
 
 .cancel {
-  background: #976391a8; /* violeta de la paleta */
+  background: #976391a8;
+  /* violeta de la paleta */
 }
 
 .cancel:hover {
